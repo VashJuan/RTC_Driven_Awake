@@ -1,0 +1,7 @@
+{
+    "configuration": "cpu=atmega328old",
+    "board": "arduino:avr:nano",
+    "programmer": "avrisp",
+    "port": "COM6",
+    "sketch": "RTC_Driven_Awake.ino"
+}
