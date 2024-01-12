@@ -3,5 +3,6 @@
     "board": "arduino:avr:nano",
     "programmer": "avrisp",
     "port": "COM6",
+    "baud": "9600",
     "sketch": "RTC_Driven_Awake.ino"
 }
