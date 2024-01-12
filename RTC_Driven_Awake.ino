@@ -1,20 +1,15 @@
 // From: https://forum.arduino.cc/t/external-rtc-to-wake-arduino-up-on-interrupt/321707
-// also see: https://github.com/JChristensen/DS3232RTC#setalarmalarm_types_t-alarmtype-uint8_t-minutes-uint8_t-hours-uint8_t-daydate
-// & https://github.com/JChristensen/DS3232RTC/blob/master/alarm-primer.md
-// On Nano:
-// Need to specify: Tools > Processor > ATmega328P (Old Bootloader)  https://arduino.stackexchange.com/questions/51771/cant-upload-to-my-nano-after-updating-to-arduino-avr-boards-1-6-21
-// (Also not have anything connected to pins 1 & 2 while uploading...???)
+// also see: https://github.com/JChristensen/DS3232RTC
 
 #include <avr/sleep.h>
 #include <avr/power.h>
-#include <DS3232RTC.h>  // https://github.com/JChristensen/DS3232RTC/
+#include <DS3232RTC.h>
 #include <Time.h>
 #include <Wire.h>
 
-
 tmElements_t tm;
 
-DS3232RTC myRTC;  // https://github.com/JChristensen/DS3232RTC/issues/49
+DS3232RTC myRTC;
 
 //CONVERT __DATE__ and __TIME__ to time_t
 time_t cvt_date(char const *date, char const *time) {
