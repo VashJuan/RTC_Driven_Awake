@@ -1,10 +1,13 @@
+
+
 // From: https://forum.arduino.cc/t/external-rtc-to-wake-arduino-up-on-interrupt/321707
 // also see: https://github.com/JChristensen/DS3232RTC
 
 #include <avr/sleep.h>
 #include <avr/power.h>
 #include <DS3232RTC.h>
-#include <Time.h>
+#include <Time.h>  
+#include <TimeLib.h> // Using the Arduino Library Manager, install "Time by Michael Margolis"
 #include <Wire.h>
 
 tmElements_t tm;
@@ -42,7 +45,7 @@ void pin2Interrupt(void) {
 }
 
 void enterSleep(void) {
-  
+  Serial.println ("\n  into sleep!");
   /* Setup pin2 as an interrupt and attach handler. */
   attachInterrupt(0, pin2Interrupt, LOW);
   delay(100);
@@ -57,6 +60,7 @@ void enterSleep(void) {
   
   /* First thing to do is disable sleep. */
   sleep_disable(); 
+  Serial.println ("out of sleep!");
 }
 
 void setup() {
@@ -68,7 +72,11 @@ void setup() {
   pinMode(pin2, INPUT);
   
   setTime(cvt_date(__DATE__, __TIME__));
+
+  Serial.println("Set RTC");
   myRTC.set(now());
+  myRTC.set(cvt_date(__DATE__, __TIME__));
+  
   myRTC.squareWave(DS3232RTC::SQWAVE_NONE); 
   // https://github.com/JChristensen/DS3232RTC#alarm-functions
   // ALM2_MATCH_MINUTES triggers once an hour
@@ -77,7 +85,7 @@ void setup() {
   
   Serial.println(String("System date = ") + month() + "/" + day() + "/" + year() + " " + hour() + ":" + minute() + ":" + second() + "\n");
   
-  Serial.println("Initialisation complete.");
+  Serial.println("Initialization complete.");
 }
 
 int seconds = 0;
@@ -92,7 +100,7 @@ void loop() {
   digitalClockDisplay(); // print time and date
   
   if(seconds == 4) {
-    Serial.println("Entering sleep");
+    Serial.println("\n Entering sleep");
     digitalClockDisplay();
     delay(200);
     seconds = 0;
